@@ -1,20 +1,17 @@
-import { Icon } from '@iconify/react';
-import { motion } from 'framer-motion';
-import flashFill from '@iconify/icons-eva/flash-fill';
+import { Icon } from '@iconify/react'
+import { motion } from 'framer-motion'
+import flashFill from '@iconify/icons-eva/flash-fill'
 // next
-import NextLink from 'next/link';
+import NextLink from 'next/link'
 // material
-import { styled } from '@mui/material/styles';
-import { Box, Link, Stack, Button, Container, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles'
+import { Box, Link, Stack, Button, Container, Typography } from '@mui/material'
 // routes
-import { PATH_DASHBOARD } from '@/routes/paths';
+import { PATH_DASHBOARD } from '@/routes/paths'
 //
-import {
-  varFadeIn,
-  varFadeInUp,
-  varWrapEnter,
-  varFadeInRight,
-} from '../../animate';
+import { varWrapEnter, varFadeInRight } from '../../animate'
+import CustomCountUp from './CustomCountup'
+import { CustomCardGlass } from '@/components/card/CustomCard'
 
 // ----------------------------------------------------------------------
 
@@ -30,158 +27,82 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     position: 'fixed',
     alignItems: 'center',
   },
-}));
+}))
 
-const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(
+const ContentStyle = styled(props => <Stack spacing={5} {...props} />)(
   ({ theme }) => ({
     zIndex: 10,
     maxWidth: 520,
     margin: 'auto',
     textAlign: 'center',
     position: 'relative',
-    paddingTop: theme.spacing(30),
+    paddingTop: theme.spacing(25),
     paddingBottom: theme.spacing(15),
     [theme.breakpoints.up('md')]: {
       margin: 'unset',
       textAlign: 'left',
     },
   })
-);
-
-const HeroOverlayStyle = styled(motion.img)({
-  zIndex: 9,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute',
-});
-
-const HeroImgStyle = styled(motion.img)(({ theme }) => ({
-  top: 0,
-  right: 0,
-  bottom: 0,
-  zIndex: 8,
-  width: '100%',
-  margin: 'auto',
-  position: 'absolute',
-  [theme.breakpoints.up('lg')]: {
-    right: '8%',
-    width: 'auto',
-    height: '48vh',
-  },
-}));
+)
 
 // ----------------------------------------------------------------------
 
 export default function Hero() {
+  const COUNT_TITLE = ['Brands', 'Generic', 'Pharmaceutical ']
+  const COUNT = [35, 5, 2]
+  const countData = [...Array(3)].map((_, index) => ({
+    count: COUNT[index],
+    countTitle: COUNT_TITLE[index],
+  }))
+
   return (
     <>
-      <RootStyle initial='initial' animate='animate' variants={varWrapEnter}>
-        <HeroOverlayStyle
-          alt='overlay'
-          src='/static/overlay.svg'
-          variants={varFadeIn}
-        />
+      <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
+        <div className={`heroOverlay`}></div>
 
-        <HeroImgStyle
-          alt='hero'
-          src='/static/home/hero.png'
-          variants={varFadeInUp}
-        />
-
-        <Container maxWidth='lg'>
+        <Container maxWidth="lg">
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
-              <Typography variant='h1' sx={{ color: 'common.white' }}>
-                Start a <br />
-                new project <br /> with
+              <Typography variant="h1" sx={{ color: 'common.white' }}>
+                Explore <br />
+                Order & Heal <br />
                 <Typography
-                  component='span'
-                  variant='h1'
+                  component="span"
+                  variant="h1"
                   sx={{ color: 'primary.main' }}
                 >
-                  &nbsp;Minimal
+                  MediShop360
                 </Typography>
               </Typography>
             </motion.div>
 
             <motion.div variants={varFadeInRight}>
               <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on
-                easy-to-customize Material-UI © helps you build apps faster and
-                better.
+                Your Trusted Online Pharmacy: Browse, Search, and Purchase
+                Medicine with Ease on MediShop360
               </Typography>
             </motion.div>
 
             <Stack
               component={motion.div}
               variants={varFadeInRight}
-              direction='row'
+              direction="row"
               spacing={1}
               justifyContent={{ xs: 'center', md: 'flex-start' }}
             >
-              <img
-                alt='sketch icon'
-                src='/static/home/ic_sketch_small.svg'
-                width={20}
-                height={20}
-              />
-              <Link
-                underline='always'
-                href='https://www.sketch.com/s/0fa4699d-a3ff-4cd5-a3a7-d851eb7e17f0'
-                target='_blank'
-                sx={{ color: 'common.white' }}
-              >
-                Preview in Sketch Cloud
-              </Link>
-            </Stack>
-
-            <motion.div variants={varFadeInRight}>
-              <NextLink href={PATH_DASHBOARD.root}>
-                <Button
-                  size='large'
-                  variant='contained'
-                  startIcon={<Icon icon={flashFill} width={20} height={20} />}
-                >
-                  Live Preview
-                </Button>
-              </NextLink>
-            </motion.div>
-
-            <Stack
-              direction='row'
-              spacing={1.5}
-              justifyContent={{ xs: 'center', md: 'flex-start' }}
-            >
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_sketch.svg'
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_figma.svg'
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_material.svg'
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_react.svg'
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_js.svg'
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src='/static/home/ic_ts.svg'
-              />
+              {countData.map((count, index) => (
+                <CustomCardGlass key={index} sx={{ p: 2, width: '220px' }}>
+                  <CustomCountUp
+                    count={count.count}
+                    countTitle={count.countTitle}
+                  />
+                </CustomCardGlass>
+              ))}
             </Stack>
           </ContentStyle>
         </Container>
       </RootStyle>
       <Box sx={{ height: { md: '100vh' } }} />
     </>
-  );
+  )
 }

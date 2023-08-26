@@ -2,9 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-a{
-    text-decoration: none !important;
+a {
+  text-decoration: none !important;
 }
-.not_active{
-    color: #6c757d !important;
+.not_active {
+  color: #6c757d !important;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
+    url(../src/assets/banner.jpg) no-repeat top center / cover !important;
+}
+
+.glass_effect {
+  background: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important;
+  backdrop-filter: blur(10.5px) !important;
+  -webkit-backdrop-filter: blur(10.5px) !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
