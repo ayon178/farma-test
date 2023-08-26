@@ -1,23 +1,23 @@
-import { Icon } from '@iconify/react';
-import { useState } from 'react';
-import searchFill from '@iconify/icons-eva/search-fill';
+import { Icon } from '@iconify/react'
+import { useState } from 'react'
+import searchFill from '@iconify/icons-eva/search-fill'
 // material
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles'
 import {
   Box,
   Input,
   Slide,
-  Button,
   InputAdornment,
   ClickAwayListener,
-} from '@mui/material';
+  Typography,
+} from '@mui/material'
 // components
-import { MIconButton } from '../../components/@material-extend';
+import { MIconButton } from '../../components/@material-extend'
 
 // ----------------------------------------------------------------------
 
-const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_MOBILE = 64
+const APPBAR_DESKTOP = 92
 
 const SearchbarStyle = styled('div')(({ theme }) => ({
   top: 0,
@@ -28,63 +28,66 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
   position: 'absolute',
   alignItems: 'center',
   height: APPBAR_MOBILE,
-  backdropFilter: 'blur(6px)',
-  WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
   padding: theme.spacing(0, 3),
   boxShadow: theme.customShadows.z8,
-  backgroundColor: `${alpha(theme.palette.background.default, 0.72)}`,
+  backgroundColor: `${alpha(theme.palette.background.default, 0.2)}`,
   [theme.breakpoints.up('md')]: {
     height: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5),
   },
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen((prev) => !prev);
-  };
+    setOpen(prev => !prev)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
         {!isOpen && (
-          <MIconButton onClick={handleOpen}>
+          <MIconButton onClick={handleOpen} sx={{ ml: 5 }}>
             <Icon icon={searchFill} width={20} height={20} />
+            <Typography
+              variant="subtitle2"
+              sx={{ ml: 1, color: 'text.secondary' }}
+            >
+              Search…
+            </Typography>
           </MIconButton>
         )}
 
-        <Slide direction='down' in={isOpen} mountOnEnter unmountOnExit>
+        <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
           <SearchbarStyle>
             <Input
               autoFocus
               fullWidth
               disableUnderline
-              placeholder='Search…'
+              placeholder="Search…"
               startAdornment={
-                <InputAdornment position='start'>
+                <InputAdornment position="start">
                   <Box
                     component={Icon}
                     icon={searchFill}
-                    sx={{ color: 'text.disabled', width: 20, height: 20 }}
+                    sx={{ color: '#fff', width: 20, height: 20 }}
                   />
                 </InputAdornment>
               }
-              sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+              sx={{ mr: 1, fontWeight: 'fontWeightBold', color: '#fff' }}
             />
-            <Button variant='contained' onClick={handleClose}>
-              Search
-            </Button>
           </SearchbarStyle>
         </Slide>
       </div>
     </ClickAwayListener>
-  );
+  )
 }
