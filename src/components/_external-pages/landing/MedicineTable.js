@@ -9,6 +9,8 @@ import {
   TableContainer,
   Button,
   Box,
+  CircularProgress,
+  Pagination,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import NextImage from 'next/image'
@@ -17,7 +19,16 @@ import tabletImage from '@/assets/tablet.png'
 
 // ----------------------------------------------------------------------
 
-export default function MedicineTable({ tableData, setPage, setLimit }) {
+export default function MedicineTable({
+  tableData,
+  setPage,
+  loader,
+  totalData,
+  page,
+}) {
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage)
+  }
   return (
     <Scrollbar>
       <TableContainer sx={{ minWidth: 800, mt: 3 }}>
@@ -34,41 +45,58 @@ export default function MedicineTable({ tableData, setPage, setLimit }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableData?.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{row.brandName}</TableCell>
-                <TableCell align="center">{row.genericName}</TableCell>
-                <TableCell align="center">{row.company}</TableCell>
-                <TableCell align="center">{row.form}</TableCell>
-                <TableCell align="center">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                    }}
-                  >
-                    <NextImage
-                      src={row.form === 'syrup' ? syrupImage : tabletImage}
-                      width={20}
-                      height={20}
-                    />
-                    <Box component="span" sx={{ ml: 1 }}>
-                      <span>{row.unitPrice.title}</span> : ৳{' '}
-                      <span>{row.unitPrice.price}</span>
-                    </Box>
-                  </Box>
-                </TableCell>
-                <TableCell align="right">
-                  <Button variant="contained" color="primary" size="small">
-                    <AddIcon /> <span className="pr-2">Add</span>
-                  </Button>
+            {loader ? (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  <CircularProgress />
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              <>
+                {tableData?.map((row, index) => (
+                  <TableRow className="border-bottom-cell" key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.brandName}</TableCell>
+                    <TableCell align="center">{row.genericName}</TableCell>
+                    <TableCell align="center">{row.company}</TableCell>
+                    <TableCell align="center">{row.form}</TableCell>
+                    <TableCell align="center">
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'flex-end',
+                        }}
+                      >
+                        <NextImage
+                          src={row.form === 'syrup' ? syrupImage : tabletImage}
+                          width={20}
+                          height={20}
+                        />
+                        <Box component="span" sx={{ ml: 1 }}>
+                          <span>{row.unitPrice.title}</span> : ৳{' '}
+                          <span>{row.unitPrice.price}</span>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button variant="contained" color="primary" size="small">
+                        <AddIcon /> <span className="pr-2">Add</span>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
           </TableBody>
         </Table>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+          <Pagination
+            count={Math.ceil(totalData / 10)}
+            page={page}
+            onChange={handleChangePage}
+          />
+        </Box>
       </TableContainer>
     </Scrollbar>
   )

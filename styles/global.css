@@ -33,6 +33,16 @@ input:focus {
   box-shadow: none !important;
 }
 
+/* Apply border-bottom to all cells except the last cell */
+.border-bottom-cell:not(:last-child) {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Add hover effect */
+.border-bottom-cell:hover {
+  background-color: #f0f0f0;
+  /* Add other styles you want to apply when the cell is hovered */
+}
 
 ::-webkit-scrollbar {
   width: 10px;

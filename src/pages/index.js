@@ -25,13 +25,16 @@ export default function LandingPage({ initialMedicine }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     async function fetchData() {
       const apiUrl = `${BASE_URL}/medicine?searchTerm=${searchTerm}&page=${page}&limit=${limit}`
       const res = await fetch(apiUrl)
       const data = await res.json()
       setMedicine(data)
+      setLoader(false)
     }
 
     fetchData()
@@ -50,6 +53,8 @@ export default function LandingPage({ initialMedicine }) {
             setSearchTerm={setSearchTerm}
             setLimit={setLimit}
             setPage={setPage}
+            loader={loader}
+            page={page}
           />
         </ContentStyle>
       </RootStyle>
