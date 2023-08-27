@@ -45,7 +45,12 @@ export default function LandingPage({ initialMedicine }) {
       >
         <Hero />
         <ContentStyle>
-          <SearchFiled medicine={medicine} setSearchTerm={setSearchTerm} />
+          <SearchFiled
+            medicine={medicine}
+            setSearchTerm={setSearchTerm}
+            setLimit={setLimit}
+            setPage={setPage}
+          />
         </ContentStyle>
       </RootStyle>
     </MainLayout>

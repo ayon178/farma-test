@@ -1,7 +1,8 @@
-import { Box, Container, Grid } from '@mui/material'
+import { Container, Grid } from '@mui/material'
 import React from 'react'
+import MedicineTable from './MedicineTable'
 
-const SearchFiled = ({ medicine, setSearchTerm }) => {
+const SearchFiled = ({ medicine, setSearchTerm, setLimit, setPage }) => {
   return (
     <Container sx={{ mt: 5 }}>
       <Grid container spacing={5}>
@@ -25,10 +26,12 @@ const SearchFiled = ({ medicine, setSearchTerm }) => {
             </div>
           </form>
         </Grid>
-        <Grid item xs={12} >
-          {medicine.data.map((item, index) => (
-            <h1 key={index}>{item.brandName}</h1>
-          ))}
+        <Grid item xs={12}>
+          <MedicineTable
+            tableData={medicine.data}
+            setPage={setPage}
+            setLimit={setLimit}
+          />
         </Grid>
       </Grid>
     </Container>
