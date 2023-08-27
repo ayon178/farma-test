@@ -40,8 +40,12 @@ input:focus {
 
 /* Add hover effect */
 .border-bottom-cell:hover {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   /* Add other styles you want to apply when the cell is hovered */
+}
+
+.no_word_break {
+  white-space: nowrap !important;
 }
 
 ::-webkit-scrollbar {
