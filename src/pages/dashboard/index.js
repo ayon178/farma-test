@@ -1,12 +1,10 @@
-import { PATH_DASHBOARD } from "src/routes/paths";
-
-// ----------------------------------------------------------------------
+import { PATH_DASHBOARD } from '@/routes/paths'
 
 function Page() {
-  return null;
+  return null
 }
 
-export default Page;
+export default Page
 
 export const getServerSideProps = () => {
   return {
@@ -14,5 +12,5 @@ export const getServerSideProps = () => {
       destination: PATH_DASHBOARD.general.pageOne,
       permanent: false,
     },
-  };
-};
+  }
+}

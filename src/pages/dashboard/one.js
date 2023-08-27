@@ -1,22 +1,19 @@
-import { Container, Typography } from '@mui/material';
-// layouts
-import DashboardLayout from 'src/layouts/dashboard';
-// hooks
-import useSettings from 'src/hooks/useSettings';
-// components
-import Page from 'src/components/Page';
+import Page from '@/components/Page'
+import useSettings from '@/hooks/useSettings'
+import DashboardLayout from '@/layouts/dashboard'
+import { Container, Typography } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
-export default function PageFour() {
-  const { themeStretch } = useSettings();
+export default function PageOne() {
+  const { themeStretch } = useSettings()
 
   return (
     <DashboardLayout>
-      <Page title='Page Four | Minimal-UI'>
+      <Page title="Page One | Minimal-UI">
         <Container maxWidth={themeStretch ? false : 'xl'}>
-          <Typography variant='h3' component='h1' paragraph>
-            Page Four
+          <Typography variant="h3" component="h1" paragraph>
+            Page One
           </Typography>
           <Typography gutterBottom>
             Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis,
@@ -42,5 +39,5 @@ export default function PageFour() {
         </Container>
       </Page>
     </DashboardLayout>
-  );
+  )
 }

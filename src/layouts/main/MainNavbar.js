@@ -94,7 +94,7 @@ export default function MainNavbar() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Download APK
+              Login
             </Button>
           </ButtonAnimate>
 

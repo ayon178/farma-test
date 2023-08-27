@@ -28,11 +28,17 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(transparent, #00AB55);
+  background: linear-gradient(transparent, #00ab55);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {

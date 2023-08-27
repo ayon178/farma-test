@@ -1,15 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 // next
-import NextLink from 'next/link';
+import NextLink from 'next/link'
 // material
-import { styled } from '@mui/material/styles';
-import { Box, Button, Typography, Container } from '@mui/material';
-// layouts
-import LogoOnlyLayout from 'src/layouts/LogoOnlyLayout';
-// components
-import { MotionContainer, varBounceIn } from 'src/components/animate';
-import Page from 'src/components/Page';
-import { PageNotFoundIllustration } from 'src/assets';
+import { styled } from '@mui/material/styles'
+import { Box, Button, Typography, Container } from '@mui/material'
+import LogoOnlyLayout from '@/layouts/LogoOnlyLayout'
+import { MotionContainer, varBounceIn } from '@/components/animate'
+import Page from '@/components/Page'
+import { PageNotFoundIllustration } from '@/assets'
 
 // ----------------------------------------------------------------------
 
@@ -19,19 +17,19 @@ const RootStyle = styled(Page)(({ theme }) => ({
   alignItems: 'center',
   paddingTop: theme.spacing(15),
   paddingBottom: theme.spacing(10),
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 export default function PageNotFound() {
   return (
     <LogoOnlyLayout>
-      <RootStyle title='404 Page Not Found | Minimal-UI'>
+      <RootStyle title="404 Page Not Found | Minimal-UI">
         <Container>
-          <MotionContainer initial='initial' open>
+          <MotionContainer initial="initial" open>
             <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
               <motion.div variants={varBounceIn}>
-                <Typography variant='h3' paragraph>
+                <Typography variant="h3" paragraph>
                   Sorry, page not found!
                 </Typography>
               </motion.div>
@@ -46,8 +44,8 @@ export default function PageNotFound() {
                 />
               </motion.div>
 
-              <NextLink href='/'>
-                <Button size='large' variant='contained'>
+              <NextLink href="/">
+                <Button size="large" variant="contained">
                   Go to Home
                 </Button>
               </NextLink>
@@ -56,5 +54,5 @@ export default function PageNotFound() {
         </Container>
       </RootStyle>
     </LogoOnlyLayout>
-  );
+  )
 }

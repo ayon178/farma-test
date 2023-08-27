@@ -1,15 +1,8 @@
-import { Icon } from '@iconify/react'
 import { motion } from 'framer-motion'
-import flashFill from '@iconify/icons-eva/flash-fill'
-// next
-import NextLink from 'next/link'
 // material
 import { styled } from '@mui/material/styles'
-import { Box, Link, Stack, Button, Container, Typography } from '@mui/material'
-// routes
-import { PATH_DASHBOARD } from '@/routes/paths'
-//
-import { varWrapEnter, varFadeInRight } from '../../animate'
+import { Box, Stack, Container, Typography } from '@mui/material'
+import { varFadeInRight, varWrapEnter } from '@/components/animate'
 import CustomCountUp from './CustomCountup'
 import { CustomCardGlass } from '@/components/card/CustomCard'
 

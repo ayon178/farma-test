@@ -3,10 +3,9 @@ import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 // emotion
 import createEmotionServer from '@emotion/server/create-instance';
-// utils
-import createEmotionCache from 'src/utils/createEmotionCache';
-// theme
-import palette from 'src/theme/palette';
+import createEmotionCache from '@/utils/createEmotionCache';
+import palette from '@/theme/palette';
+
 
 // ----------------------------------------------------------------------
 
