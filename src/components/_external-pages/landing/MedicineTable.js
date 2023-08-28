@@ -121,13 +121,13 @@ export default function MedicineTable({
             />
           </Box>
         </TableContainer>
-      </Scrollbar>
         {addedMedicine.length > 0 && (
           <AddedList
             setAddedMedicine={setAddedMedicine}
             addedMedicine={addedMedicine}
           />
         )}
+      </Scrollbar>
     </>
   )
 }
