@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material'
+import { Container, Grid, Typography } from '@mui/material'
 import React from 'react'
 import MedicineTable from './MedicineTable'
 
@@ -12,7 +12,15 @@ const SearchFiled = ({
 }) => {
   return (
     <Container sx={{ mt: 5 }} className="min-h-screen">
-      <Grid container spacing={5}>
+      <marquee className="border rounded p-1 mb-2 marquee bg-gray-100">
+        Offering a wide range of quality medicines for your well-being. Trusted
+        brands, affordable prices, and fast delivery on essential
+        pharmaceuticals. Your health is our priority, and we're here to provide
+        expert care with a comprehensive selection of medicines. Discover relief
+        and healing through our trusted collection of pharmaceuticals. Shop
+        online with us for a healthier tomorrow!
+      </marquee>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           <form className="flex items-center">
             <label htmlFor="simple-search" className="sr-only">

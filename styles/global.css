@@ -44,6 +44,12 @@ input:focus {
   /* Add other styles you want to apply when the cell is hovered */
 }
 
+marquee {
+  letter-spacing: normal;
+  word-spacing: normal;
+  font-size: 15px;
+}
+
 .no_word_break {
   white-space: nowrap !important;
 }

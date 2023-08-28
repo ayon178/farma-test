@@ -27,6 +27,7 @@ export default function MedicineTable({
   loader,
   totalData,
   page,
+  setMedicine,
 }) {
   const [addedMedicine, setAddedMedicine] = useState([])
   const handleChangePage = (_, newPage) => {
@@ -54,6 +55,7 @@ export default function MedicineTable({
                 <TableCell align="center">Generic</TableCell>
                 <TableCell align="center">Company</TableCell>
                 <TableCell align="center">Form</TableCell>
+                <TableCell align="center">Variant</TableCell>
                 <TableCell align="center">Price</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
@@ -74,6 +76,7 @@ export default function MedicineTable({
                       <TableCell align="center">{row.genericName}</TableCell>
                       <TableCell align="center">{row.company}</TableCell>
                       <TableCell align="center">{row.form}</TableCell>
+                      <TableCell align="center">{row.variant}</TableCell>
                       <TableCell align="center">
                         <Box
                           sx={{
@@ -119,9 +122,13 @@ export default function MedicineTable({
             />
           </Box>
         </TableContainer>
-      {addedMedicine.length > 0 && <AddedList addedMedicine={addedMedicine} />}
+        {addedMedicine.length > 0 && (
+          <AddedList
+            setAddedMedicine={setAddedMedicine}
+            addedMedicine={addedMedicine}
+          />
+        )}
       </Scrollbar>
-
     </>
   )
 }
