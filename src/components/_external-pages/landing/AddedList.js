@@ -18,8 +18,8 @@ import NextImage from 'next/image'
 import syrupImage from '@/assets/syrup.png'
 import tabletImage from '@/assets/tablet.png'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
 import { updateMedicine } from '@/api/medicine'
+import { useSession, signIn } from 'next-auth/react'
 
 const AddedList = ({ addedMedicine, setAddedMedicine }) => {
   const { data: session } = useSession()
@@ -32,7 +32,10 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
   }
 
   const handlePrint = () => {
-    if (!session) router.push('/login')
+    if (!session) {
+      signIn('google')
+      return
+    }
     const dataArray = encodeURIComponent(JSON.stringify(addedMedicine))
     const userName = encodeURIComponent(session.user.name)
     const userEmail = encodeURIComponent(session.user.email)
