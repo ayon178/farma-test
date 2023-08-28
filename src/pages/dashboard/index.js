@@ -9,7 +9,7 @@ export default Page
 export const getServerSideProps = () => {
   return {
     redirect: {
-      destination: PATH_DASHBOARD.general.pageOne,
+      destination: PATH_DASHBOARD.Medicines.medicineList,
       permanent: false,
     },
   }

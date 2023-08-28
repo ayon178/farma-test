@@ -13,7 +13,7 @@ import { MHidden } from '@/components/@material-extend'
 import MenuMobile from './MenuMobile'
 import MenuDesktop from './MenuDesktop'
 import navConfig from './MenuConfig'
-import Searchbar from '../dashboard/Searchbar'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +47,8 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainNavbar() {
+  const { data: session } = useSession()
+  
   const isOffset = useOffSetTop(100)
   const { pathname } = useRouter()
   const isHome = pathname === '/'
@@ -86,17 +88,29 @@ export default function MainNavbar() {
             />
           </MHidden>
 
-          <ButtonAnimate>
-            <Button
-              variant="contained"
-              color="primary"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Login
-            </Button>
-          </ButtonAnimate>
+          {session ? (
+            <ButtonAnimate>
+              <Button
+                variant="contained"
+                color="primary"
+                rel="noopener noreferrer"
+                onClick={() => signOut('google')}
+              >
+                Log Out
+              </Button>
+            </ButtonAnimate>
+          ) : (
+            <ButtonAnimate>
+              <Button
+                variant="contained"
+                color="primary"
+                rel="noopener noreferrer"
+                onClick={() => signIn('google')}
+              >
+                Log In
+              </Button>
+            </ButtonAnimate>
+          )}
 
           <MHidden width="mdUp">
             <MenuMobile

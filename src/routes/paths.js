@@ -1,24 +1,17 @@
 // ----------------------------------------------------------------------
-export const BASE_URL = "http://localhost:8000/api/v1";
+export const BASE_URL = 'http://localhost:8000/api/v1'
 function path(root, sublink) {
-  return `${root}${sublink}`;
+  return `${root}${sublink}`
 }
 
-const ROOTS_DASHBOARD = "/dashboard";
+const ROOTS_DASHBOARD = '/dashboard'
 
 // ----------------------------------------------------------------------
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  general: {
-    pageOne: path(ROOTS_DASHBOARD, "/one"),
-    pageTwo: path(ROOTS_DASHBOARD, "/two"),
-    pageThree: path(ROOTS_DASHBOARD, "/three"),
+  Medicines: {
+    medicineList: path(ROOTS_DASHBOARD, '/medicine-list'),
+    addMedicine: path(ROOTS_DASHBOARD, '/add-medicine'),
   },
-  app: {
-    root: path(ROOTS_DASHBOARD, "/app"),
-    pageFour: path(ROOTS_DASHBOARD, "/app/four"),
-    pageFive: path(ROOTS_DASHBOARD, "/app/five"),
-    pageSix: path(ROOTS_DASHBOARD, "/app/six"),
-  },
-};
+}

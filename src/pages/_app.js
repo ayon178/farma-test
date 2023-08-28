@@ -16,6 +16,7 @@ import RtlLayout from '@/components/RtlLayout'
 import ProgressBar from '@/components/ProgressBar'
 import LoadingScreen from '@/components/LoadingScreen'
 import ThemePrimaryColor from '@/components/ThemePrimaryColor'
+import { SessionProvider } from 'next-auth/react'
 import '../../styles/global.css'
 
 // ----------------------------------------------------------------------
@@ -26,28 +27,30 @@ export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (
-    <SettingsProvider>
-      <CollapseDrawerProvider>
-        <CacheProvider value={emotionCache}>
-          <Head>
-            <meta
-              name="viewport"
-              content="initial-scale=1, width=device-width"
-            />
-          </Head>
+    <SessionProvider session={pageProps.session}>
+      <SettingsProvider>
+        <CollapseDrawerProvider>
+          <CacheProvider value={emotionCache}>
+            <Head>
+              <meta
+                name="viewport"
+                content="initial-scale=1, width=device-width"
+              />
+            </Head>
 
-          <ThemeConfig>
-            <ThemePrimaryColor>
-              <RtlLayout>
-                <GlobalStyles />
-                <ProgressBar />
-                <LoadingScreen />
-                <Component {...pageProps} />
-              </RtlLayout>
-            </ThemePrimaryColor>
-          </ThemeConfig>
-        </CacheProvider>
-      </CollapseDrawerProvider>
-    </SettingsProvider>
+            <ThemeConfig>
+              <ThemePrimaryColor>
+                <RtlLayout>
+                  <GlobalStyles />
+                  <ProgressBar />
+                  <LoadingScreen />
+                  <Component {...pageProps} />
+                </RtlLayout>
+              </ThemePrimaryColor>
+            </ThemeConfig>
+          </CacheProvider>
+        </CollapseDrawerProvider>
+      </SettingsProvider>
+    </SessionProvider>
   )
 }

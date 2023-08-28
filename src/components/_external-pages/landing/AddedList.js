@@ -1,5 +1,3 @@
-import Scrollbar from '@/components/Scrollbar'
-import Button from '@/theme/overrides/Button'
 import {
   Box,
   FormControl,
@@ -19,13 +17,39 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import NextImage from 'next/image'
 import syrupImage from '@/assets/syrup.png'
 import tabletImage from '@/assets/tablet.png'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import { updateMedicine } from '@/api/medicine'
 
 const AddedList = ({ addedMedicine, setAddedMedicine }) => {
+  const { data: session } = useSession()
+  const router = useRouter()
   const [rowQuantities, setRowQuantities] = useState({})
 
   const handleRemoveMedicine = id => {
     const remainingMedicine = addedMedicine.filter(item => item._id !== id)
     setAddedMedicine(remainingMedicine)
+  }
+
+  if (!session) router.push('/login')
+
+  const handlePrint = () => {
+    const dataArray = encodeURIComponent(JSON.stringify(addedMedicine))
+    const userName = encodeURIComponent(session.user.name)
+    const userEmail = encodeURIComponent(session.user.email)
+
+    addedMedicine.forEach(async item => {
+      updateMedicine(item._id, item.quantity - (item.taken || 1))
+    })
+
+    router.push({
+      pathname: '/invoice',
+      query: {
+        dataArray,
+        userName,
+        userEmail,
+      },
+    })
   }
 
   return (
@@ -116,6 +140,12 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <button
+        onClick={handlePrint}
+        className="bg-[#00AB55] text-white px-5 py-1 rounded mt-4 ml-auto block mr-4 delay-75 hover:bg-[#21744a]"
+      >
+        Print
+      </button>
     </>
   )
 }
