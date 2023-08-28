@@ -13,3 +13,15 @@ export const updateMedicine = async (id, quantity) => {
     console.log(error)
   }
 }
+
+export const addMedicine = async data => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/medicine`,
+      data
+    )
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
