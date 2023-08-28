@@ -12,7 +12,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import NextImage from 'next/image'
 import syrupImage from '@/assets/syrup.png'
@@ -25,6 +25,22 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
   const { data: session } = useSession()
   const router = useRouter()
   const [rowQuantities, setRowQuantities] = useState({})
+  const [staticDiscount, setStaticDiscount] = useState(0)
+  const [total, setTotal] = useState(
+    addedMedicine.reduce(
+      (acc, item) => acc + (item.taken || 1) * item.unitPrice.price,
+      0
+    )
+  )
+
+  useEffect(() => {
+    setTotal(
+      addedMedicine.reduce(
+        (acc, item) => acc + (item.taken || 1) * item.unitPrice.price,
+        0
+      )
+    )
+  }, [addedMedicine, rowQuantities])
 
   const handleRemoveMedicine = id => {
     const remainingMedicine = addedMedicine.filter(item => item._id !== id)
@@ -60,7 +76,7 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
         Ready for Invoice
       </Typography>
       <TableContainer sx={{ minWidth: 800, mt: 3 }}>
-        <Table>
+        <Table className="border-b">
           <TableHead>
             <TableRow>
               <TableCell>Serial</TableCell>
@@ -142,6 +158,85 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {addedMedicine?.length !== 0 && (
+        <>
+          {/* Total */}
+          <Typography
+            sx={{
+              textAlign: 'right',
+              marginRight: 2,
+              marginTop: 2,
+              marginBottom: 1,
+            }}
+            variant="body2"
+            className="font-semibold"
+            paragraph
+          >
+            {`Total: ৳ ${total}`}
+          </Typography>
+
+          {/* Discount */}
+          {staticDiscount ? (
+            <Typography
+              sx={{ textAlign: 'right', marginRight: 2, marginBottom: 1 }}
+              variant="body2"
+              className="font-semibold"
+              paragraph
+            >
+              {`Taken Discount: ৳ ${Number(staticDiscount)?.toFixed(2)}`}
+            </Typography>
+          ) : (
+            <Typography
+              sx={{ textAlign: 'right', marginRight: 2, marginBottom: 1 }}
+              variant="body2"
+              className="font-semibold"
+              paragraph
+            >
+              {`7% Discount: ৳ ${(total * 0.07).toFixed(2)}`}
+            </Typography>
+          )}
+
+          {/* Amount to pay */}
+          {staticDiscount ? (
+            <Typography
+              sx={{ textAlign: 'right', marginRight: 2, marginBottom: 1 }}
+              variant="body2"
+              className="font-semibold"
+              paragraph
+            >
+              {`Amount to Pay: ৳ ${(total - staticDiscount).toFixed(2)}`}
+            </Typography>
+          ) : (
+            <Typography
+              sx={{ textAlign: 'right', marginRight: 2,}}
+              variant="body2"
+              className="font-semibold"
+              paragraph
+            >
+              {`Amount to Pay: ৳ ${(total - total * 0.07).toFixed(2)}`}
+            </Typography>
+          )}
+
+          <TextField
+            sx={{ width: 200, ml: 'auto', display: 'block', marginRight: 2 }}
+            label="Discount ৳"
+            size="small"
+            type="number"
+            variant="outlined"
+            value={staticDiscount || (total * 0.07).toFixed(2)}
+            onChange={e => {
+              if (e.target.value < 0) {
+                alert('Discount can not be negative')
+                return
+              } else if (e.target.value >= total) {
+                alert('Discount can not be greater than total amount')
+                return
+              }
+              setStaticDiscount(e.target.value)
+            }}
+          />
+        </>
+      )}
       <button
         onClick={handlePrint}
         className="bg-[#00AB55] text-white px-5 py-1 rounded mt-4 ml-auto block mr-4 delay-75 hover:bg-[#21744a]"
