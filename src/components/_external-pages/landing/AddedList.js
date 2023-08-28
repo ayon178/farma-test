@@ -31,9 +31,8 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
     setAddedMedicine(remainingMedicine)
   }
 
-  if (!session) router.push('/login')
-
   const handlePrint = () => {
+    if (!session) router.push('/login')
     const dataArray = encodeURIComponent(JSON.stringify(addedMedicine))
     const userName = encodeURIComponent(session.user.name)
     const userEmail = encodeURIComponent(session.user.email)
