@@ -9,6 +9,8 @@ import {
   TableHead,
   TableRow,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Tooltip,
   Typography,
 } from '@mui/material'
@@ -26,12 +28,18 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
   const router = useRouter()
   const [rowQuantities, setRowQuantities] = useState({})
   const [staticDiscount, setStaticDiscount] = useState(0)
+  const [parcentDiscount, setParcentDiscount] = useState(7)
   const [total, setTotal] = useState(
     addedMedicine.reduce(
       (acc, item) => acc + (item.taken || 1) * item.unitPrice.price,
       0
     )
   )
+  const [discountIn, setDiscountIn] = useState('parcent')
+
+  const handleChange = (event, newAlignment) => {
+    setDiscountIn(newAlignment)
+  }
 
   useEffect(() => {
     setTotal(
@@ -55,6 +63,10 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
     const dataArray = encodeURIComponent(JSON.stringify(addedMedicine))
     const userName = encodeURIComponent(session.user.name)
     const userEmail = encodeURIComponent(session.user.email)
+    const subtotal = staticDiscount
+      ? (total - staticDiscount).toFixed(2)
+      : (total - total * (Number(parcentDiscount) * 0.01 || 0.07)).toFixed(2)
+    const subtotalEncoded = encodeURIComponent(subtotal)
 
     addedMedicine.forEach(async item => {
       updateMedicine(item._id, item.quantity - (item.taken || 1))
@@ -66,6 +78,7 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
         dataArray,
         userName,
         userEmail,
+        subtotal: subtotalEncoded,
       },
     })
   }
@@ -192,7 +205,9 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
               className="font-semibold"
               paragraph
             >
-              {`7% Discount: ৳ ${(total * 0.07).toFixed(2)}`}
+              {`${parcentDiscount}% Discount: ৳ ${(
+                total * (Number(parcentDiscount) * 0.01 || 0.07)
+              ).toFixed(2)}`}
             </Typography>
           )}
 
@@ -208,33 +223,80 @@ const AddedList = ({ addedMedicine, setAddedMedicine }) => {
             </Typography>
           ) : (
             <Typography
-              sx={{ textAlign: 'right', marginRight: 2,}}
+              sx={{ textAlign: 'right', marginRight: 2 }}
               variant="body2"
               className="font-semibold"
               paragraph
             >
-              {`Amount to Pay: ৳ ${(total - total * 0.07).toFixed(2)}`}
+              {`Amount to Pay: ৳ ${(
+                total -
+                total * (Number(parcentDiscount) * 0.01 || 0.07)
+              ).toFixed(2)}`}
             </Typography>
           )}
 
-          <TextField
-            sx={{ width: 200, ml: 'auto', display: 'block', marginRight: 2 }}
-            label="Discount ৳"
-            size="small"
-            type="number"
-            variant="outlined"
-            value={staticDiscount || (total * 0.07).toFixed(2)}
-            onChange={e => {
-              if (e.target.value < 0) {
-                alert('Discount can not be negative')
-                return
-              } else if (e.target.value >= total) {
-                alert('Discount can not be greater than total amount')
-                return
-              }
-              setStaticDiscount(e.target.value)
-            }}
-          />
+          {/* Toggler */}
+          <Box
+            sx={{ display: 'flex', justifyContent: 'flex-end', mr: 2, mb: 2 }}
+          >
+            <ToggleButtonGroup
+              color="primary"
+              value={discountIn}
+              exclusive
+              onChange={handleChange}
+              aria-label="Platform"
+              size="small"
+            >
+              <ToggleButton value="parcent">
+                Discount in Parcentage
+              </ToggleButton>
+              <ToggleButton value="static">Static Discount</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+
+          {/* Parcent Discount */}
+          {discountIn === 'parcent' && (
+            <TextField
+              sx={{ width: 200, ml: 'auto', display: 'block', marginRight: 2 }}
+              label="Discount parcent"
+              size="small"
+              type="number"
+              variant="outlined"
+              value={parcentDiscount || (total * 0.07).toFixed(2)}
+              onChange={e => {
+                if (e.target.value < 0) {
+                  alert('Discount can not be negative')
+                  return
+                } else if (e.target.value >= total) {
+                  alert('Discount can not be greater than total amount')
+                  return
+                }
+                setParcentDiscount(e.target.value)
+              }}
+            />
+          )}
+
+          {/* Static discount */}
+          {discountIn === 'static' && (
+            <TextField
+              sx={{ width: 200, ml: 'auto', display: 'block', marginRight: 2 }}
+              label="Discount ৳"
+              size="small"
+              type="number"
+              variant="outlined"
+              value={staticDiscount || (total * 0.07).toFixed(2)}
+              onChange={e => {
+                if (e.target.value < 0) {
+                  alert('Discount can not be negative')
+                  return
+                } else if (e.target.value >= total) {
+                  alert('Discount can not be greater than total amount')
+                  return
+                }
+                setStaticDiscount(e.target.value)
+              }}
+            />
+          )}
         </>
       )}
       <button

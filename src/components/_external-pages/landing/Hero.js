@@ -76,7 +76,8 @@ export default function Hero() {
               </Typography>
             </motion.div>
 
-            <Stack
+            {/* Counter */}
+            {/* <Stack
               component={motion.div}
               variants={varFadeInRight}
               direction="row"
@@ -91,7 +92,7 @@ export default function Hero() {
                   />
                 </CustomCardGlass>
               ))}
-            </Stack>
+            </Stack> */}
           </ContentStyle>
         </Container>
       </RootStyle>

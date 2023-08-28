@@ -25,6 +25,7 @@ const Invoice = () => {
   )
   const userName = decodeURIComponent(router.query.userName || '')
   const userEmail = decodeURIComponent(router.query.userEmail || '')
+  const subtotalDecoded = decodeURIComponent(router.query.subtotal || '')
 
   const subtotal = dataArray.reduce((total, item) => {
     const itemPrice = Number(item.unitPrice.price)
@@ -119,7 +120,7 @@ const Invoice = () => {
           <tr>
             <td colspan="3"></td>
             <td colspan="2">Subtotal</td>
-            <td>{subtotal}</td>
+            <td>{subtotalDecoded}</td>
           </tr>
         </tfoot>
       </table>
